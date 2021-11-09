@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/ConsoleUserManagmentSystem.dir/main.cpp.o CMakeFiles/ConsoleUserManagmentSystem.dir/Database.cpp.o -o ConsoleUserManagmentSystem   -L/home/xenono/mysql/lib  -Wl,-rpath,/home/xenono/mysql/lib -lmysqlcppconn -lmysqlcppconn -lmysqlcppconn -Wl,-Bstatic -lmysqlcppconn-static -Wl,-Bdynamic 
