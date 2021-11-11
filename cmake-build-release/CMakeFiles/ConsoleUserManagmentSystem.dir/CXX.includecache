@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.cpp
-Database.h
-/home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.h
-
 /home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.h
 cppconn/driver.h
 -
@@ -20,6 +16,26 @@ cppconn/resultset.h
 cppconn/statement.h
 -
 cppconn/connection.h
+-
+
+/home/xenono/CLionProjects/ConsoleUserManagmentSystem/main.cpp
+iostream
+-
+cppconn/driver.h
+-
+cppconn/exception.h
+-
+cppconn/resultset.h
+-
+cppconn/statement.h
+-
+cppconn/connection.h
+-
+Database.h
+/home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.h
+chrono
+-
+thread
 -
 
 /home/xenono/mysql/include/cppconn/build_config.h

@@ -5,6 +5,8 @@
 #include <cppconn/statement.h>
 #include <cppconn/connection.h>
 #include "Database.h"
+#include <chrono>
+#include <thread>
 
 #define DEFAULT_URI "tcp://127.0.0.1"
 #define EXAMPLE_USER "root"
@@ -13,55 +15,46 @@
 
 using std::cout, std::endl, std::cin, std::string;
 
+void displayMenu();
 
 int main() {
     const string url = DEFAULT_URI;
     const string user(EXAMPLE_USER);
     const string pass(EXAMPLE_PASS);
     const string database(EXAMPLE_DB);
-
-    try {
-//        sql::Driver * driver;
-
-    /* Using the Driver to create a connection */
-//        driver = get_driver_instance_by_name("");
-//        cout << "Creating session on " << url << " ..."
-//             << endl << endl;
-//
-//        std::unique_ptr< sql::Connection >
-//                con(driver->connect(url, "root", "root"));
-//        con->setSchema(database);
-//
-//        std::unique_ptr< sql::Statement > stmt(con->createStatement());
-//        std::unique_ptr< sql::ResultSet >
-//                res(stmt->executeQuery("SELECT * from users"));
-//
-    auto *db = new Database(url, user, pass, database);
-//    std::unique_ptr<sql::ResultSet> res = db->GetUsers();
-    db->GetUsers();
+    int userMenuChoice = 5;
+    // User Interface
+    cout << "Welcome to Console User Management System." << std::endl;
+    cout << "Press enter to connect to the database";
+    cin.get();
+    cout << "Connecting to SQL database";
+    for (int i = 8; i > 0; i--) {
+        cout << ".";
+        cout.flush();
+        std::this_thread::sleep_for(std::chrono::milliseconds(i * 100 / 4));
 
     }
-    catch (sql::SQLException &e)
-    {
-        /*
-          The JDBC API throws three different exceptions:
-
-        - sql::MethodNotImplementedException (derived from sql::SQLException)
-        - sql::InvalidArgumentException (derived from sql::SQLException)
-        - sql::SQLException (derived from std::runtime_error)
-        */
-
-        cout << "# ERR: SQLException in " << __FILE__;
-        cout << "(" << "EXAMPLE_FUNCTION" << ") on line " << __LINE__ << endl;
-
-        /* Use what() (derived from std::runtime_error) to fetch the error message */
-
-        cout << "# ERR: " << e.what();
-        cout << " (MySQL error code: " << e.getErrorCode();
-        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-
-        return EXIT_FAILURE;
+    cout << std::endl;
+    auto db = new Database(url, user, pass, database);
+    if (db->IsConnected) {
+        cout << "Database connected";
+    } else {
+        cout << std::endl << "Connection failed!" << std::endl << "Please check database connection and credentials.";
+        return 1;
     }
-    return EXIT_SUCCESS;
-//    return 1;
+    while (userMenuChoice != 0) {
+        displayMenu();
+        cout << "Option: ";
+        cin >> userMenuChoice;
+    }
+    return 1;
+}
+
+void displayMenu() {
+    cout << "\n --- Menu ---\n"
+         << " 0 - Exit\n"
+         << " 1 - Get Users\n"
+         << " 2 - Insert User\n"
+         << " 3 - Delete User\n"
+         << " --- ---- --- \n";
 }

@@ -11,16 +11,19 @@ using std::string;
 
 
 class Database {
+public:
+    bool IsConnected = false;
 private:
     sql::Driver* Driver;
     std::unique_ptr<sql::Connection> Connection;
     string Uri, User, Password,DatabaseName;
-    std::unique_ptr<sql::Connection>  connect();
+    std::unique_ptr<sql::Connection>  Connect();
 
 public:
     Database(string uri, string user, string password, string databaseName);
-//    std::unique_ptr<sql::ResultSet> GetUsers();
     void GetUsers();
+    void InsertUser(string firstName, string secondName, string phoneNumber);
+    void DeleteUser(int id);
 };
 
 
