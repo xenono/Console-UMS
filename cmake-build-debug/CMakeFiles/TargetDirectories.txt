@@ -1,3 +1,0 @@
-/home/xenono/CLionProjects/ConsoleUserManagmentSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/xenono/CLionProjects/ConsoleUserManagmentSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/xenono/CLionProjects/ConsoleUserManagmentSystem/cmake-build-debug/CMakeFiles/ConsoleUserManagmentSystem.dir
