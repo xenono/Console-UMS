@@ -1,21 +1,23 @@
 #include <iostream>
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/connection.h>
 #include "Database.h"
 #include <chrono>
 #include <thread>
+#include <regex>
 
 #define DEFAULT_URI "tcp://127.0.0.1"
 #define EXAMPLE_USER "root"
-#define EXAMPLE_PASS "root"
+#define EXAMPLE_PASS ""
 #define EXAMPLE_DB "consoleums"
 
 using std::cout, std::endl, std::cin, std::string;
 
 void displayMenu();
+
+void insertUser(Database *db);
+
+bool isNonAlpha(string text);
+
+bool isNumber(string text);
 
 int main() {
     const string url = DEFAULT_URI;
@@ -46,6 +48,28 @@ int main() {
         displayMenu();
         cout << "Option: ";
         cin >> userMenuChoice;
+        switch (userMenuChoice) {
+            case 0: {
+                cout << "Exiting...";
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                break;
+            }
+            case 1: {
+                db->GetUsers();
+                break;
+            }
+            case 2: {
+                cout << "Insert User Procedure";
+                insertUser(db);
+                break;
+            }
+            case 3: {
+                break;
+            }
+            default:
+                cout << "Choose a number in range 0 to 3" << std::endl;
+                break;
+        }
     }
     return 1;
 }
@@ -57,4 +81,36 @@ void displayMenu() {
          << " 2 - Insert User\n"
          << " 3 - Delete User\n"
          << " --- ---- --- \n";
+}
+
+void insertUser(Database *db) {
+    string firstName, secondName, phoneNumber;
+    cout << std::endl << "Enter user's first name" << std::endl;
+    cin >> firstName;
+    while (!firstName.empty() && !isNonAlpha(firstName)) {
+        cout << std::endl << "Enter user's first name" << std::endl;
+        cout << "Name can only contain letters" << std::endl;
+        cin >> firstName;
+    }
+    cout << std::endl << "Enter user's second name" << std::endl;
+    cin >> secondName;
+    while (!secondName.empty() && !isNonAlpha(secondName)) {
+        cout << std::endl << "Enter user's second name" << std::endl;
+        cout << "Second name can only contain letters" << std::endl;
+        cin >> secondName;
+    }
+    do {
+        cout << std::endl << "Enter user's phone number" << std::endl;
+        cout << "Phone has to be 11 digits long" << std::endl;
+        cin >> phoneNumber;
+    }while (!isNumber(phoneNumber));
+    db->InsertUser(firstName, secondName, phoneNumber);
+}
+
+bool isNonAlpha(string text) {
+    return std::regex_match(text, std::regex("[A-Za-z]+$"));
+}
+
+bool isNumber(string text) {
+    return std::regex_match(text, std::regex("[0-9]{11}+$"));
 }
