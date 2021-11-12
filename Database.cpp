@@ -76,13 +76,29 @@ void Database::DeleteUser(int id){
     try {
         std::unique_ptr<sql::Statement> statement(Connection->createStatement());
         statement->execute("DELETE FROM users WHERE id=" + std::to_string(id) + ";");
-        cout << "Users has been successfully deleted";
+        cout << std::endl << "Users has been successfully deleted" << std::endl;
     }catch(sql::SQLException &e){
         cout << "DeleteUser Error "
         << "#ERR: " << e.what()
         << " Code: " << e.getErrorCode()
         << ", SQLState: " << e.getSQLState() << " " << std::endl;
     }
+}
+
+bool Database::CheckIfUserExists(int id) {
+    try {
+        std::unique_ptr<sql::Statement> statement(Connection->createStatement());
+        std::unique_ptr<sql::ResultSet> res(statement->executeQuery("SELECT * FROM users WHERE id=" + std::to_string(id) + ";"));
+        if(res->next())
+            return true;
+        return false;
+    } catch(sql::SQLException &e){
+        cout << "Checking Error "
+             << "#ERR: " << e.what()
+             << " Code: " << e.getErrorCode()
+             << ", SQLState: " << e.getSQLState() << " " << std::endl;
+    }
+    return false;
 }
 
 

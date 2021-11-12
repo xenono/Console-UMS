@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.cpp
+Database.h
+/home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.h
+
 /home/xenono/CLionProjects/ConsoleUserManagmentSystem/Database.h
 cppconn/driver.h
 -

@@ -24,6 +24,7 @@ public:
     void GetUsers();
     void InsertUser(string firstName, string secondName, string phoneNumber);
     void DeleteUser(int id);
+    bool CheckIfUserExists(int id);
 };
 
 

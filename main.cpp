@@ -15,6 +15,8 @@ void displayMenu();
 
 void insertUser(Database *db);
 
+void deleteUser(Database *db);
+
 bool isNonAlpha(string text);
 
 bool isNumber(string text);
@@ -51,7 +53,7 @@ int main() {
         switch (userMenuChoice) {
             case 0: {
                 cout << "Exiting...";
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                std::this_thread::sleep_for(std::chrono::milliseconds(2));
                 break;
             }
             case 1: {
@@ -59,11 +61,13 @@ int main() {
                 break;
             }
             case 2: {
-                cout << "Insert User Procedure";
+                cout << "Insert User Procedure" << std::endl;
                 insertUser(db);
                 break;
             }
             case 3: {
+                cout << "Delete User Procedure" << std::endl;
+                deleteUser(db);
                 break;
             }
             default:
@@ -85,26 +89,35 @@ void displayMenu() {
 
 void insertUser(Database *db) {
     string firstName, secondName, phoneNumber;
-    cout << std::endl << "Enter user's first name" << std::endl;
-    cin >> firstName;
-    while (!firstName.empty() && !isNonAlpha(firstName)) {
+    do {
+
         cout << std::endl << "Enter user's first name" << std::endl;
         cout << "Name can only contain letters" << std::endl;
         cin >> firstName;
-    }
-    cout << std::endl << "Enter user's second name" << std::endl;
-    cin >> secondName;
-    while (!secondName.empty() && !isNonAlpha(secondName)) {
+
+    } while (!firstName.empty() && !isNonAlpha(firstName));
+    do {
         cout << std::endl << "Enter user's second name" << std::endl;
         cout << "Second name can only contain letters" << std::endl;
         cin >> secondName;
-    }
+    } while (!secondName.empty() && !isNonAlpha(secondName));
     do {
         cout << std::endl << "Enter user's phone number" << std::endl;
         cout << "Phone has to be 11 digits long" << std::endl;
         cin >> phoneNumber;
-    }while (!isNumber(phoneNumber));
+    } while (!isNumber(phoneNumber));
     db->InsertUser(firstName, secondName, phoneNumber);
+}
+
+void deleteUser(Database *db){
+    int userId;
+    cout << "Enter id of user who will be deleted: ";
+    cin >> userId;
+    cout << std::endl;
+    if(db->CheckIfUserExists(userId)){
+        db->DeleteUser(userId);
+    } else
+        cout << "User with this ID  does not exist";
 }
 
 bool isNonAlpha(string text) {
